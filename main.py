@@ -53,16 +53,9 @@ class Graph:
         if menorDistancia[final] != float("inf"):
             return print("Chegou ao destino pela", antecessor[final][1], "com distância de:", str(menorDistancia[final]), "metros.")
 
-def eliminaBarraEne(string):
-    stringNova = ""
-    for caractere in string:
-        if (caractere != "\n"):
-            stringNova += caractere
-    return stringNova
-
 def lerArquivo():
     lista = []
-    arq = open("avalon.txt", "r")
+    arq = open("base_de_dados.txt", "r")
     linhas = arq.readlines()
     arq.close()
     for linha in linhas:
