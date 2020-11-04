@@ -51,18 +51,11 @@ class Graph:
         caminho.insert(0,inicial)
 
         if menorDistancia[final] != float("inf"):
-            return print("Chegou ao destino pela", antecessor[final][1], "com distância de:", str(menorDistancia[final]), "metros.")
-
-def eliminaBarraEne(string):
-    stringNova = ""
-    for caractere in string:
-        if (caractere != "\n"):
-            stringNova += caractere
-    return stringNova
+            return print("Chegou ao destino pela", antecessor[final][1], "com distância de", str(menorDistancia[final]), "metros")
 
 def lerArquivo():
     lista = []
-    arq = open("avalon.txt", "r")
+    arq = open("base_de_dados_avalon.txt", "r")
     linhas = arq.readlines()
     arq.close()
     for linha in linhas:
@@ -74,6 +67,7 @@ def lerArquivo():
         lista.append(cruzamentoInicial + ", " + cruzamentoFinal + ", " + dist + ", " + rua)
     return lista
 
+
 verticeSet = set()
 verticeSetAux = set()
 grafo = Graph()
@@ -81,23 +75,26 @@ listaAuxCaminhos = []
 caminho = lerArquivo()
 pontoPartida = input("Digite o ponto de partida: ")
 pontoChegada = input("Digite o ponto de chegada: ")
-for entrada in caminho:
-    listaCaminho = entrada.split(", ")
-
-    if ((listaCaminho[0], listaCaminho[1]) in verticeSetAux) or ((listaCaminho[1], listaCaminho[0]) in verticeSetAux):
-        for aresta in listaAuxCaminhos:
-            if ((aresta[0] == listaCaminho[0]) or (aresta[0] == listaCaminho[1])) and ((aresta[1] == listaCaminho[1]) or (aresta[1] == listaCaminho[0])):
-                if aresta[2] > listaCaminho[2]:
-                    listaAuxCaminhos.remove(aresta)
-                    listaAuxCaminhos.append(listaCaminho)
-    else:
-        listaAuxCaminhos.append(listaCaminho)
-        verticeSet.add(listaCaminho[0])
-        verticeSet.add(listaCaminho[1])
-        verticeSetAux.add((listaCaminho[0], listaCaminho[1]))
-
-if (pontoPartida not in verticeSet) or (pontoChegada not in verticeSet):
-    print("inf")
+if pontoPartida == pontoChegada:
+    print("Você continuou no mesmo cruzamento, distância: 0")
 else:
-    grafo.buildGraph(listaAuxCaminhos, verticeSet)
-    grafo.dijkstra(pontoPartida, pontoChegada)
+    for entrada in caminho:
+        listaCaminho = entrada.split(", ")
+
+        if ((listaCaminho[0], listaCaminho[1]) in verticeSetAux) or ((listaCaminho[1], listaCaminho[0]) in verticeSetAux):
+            for aresta in listaAuxCaminhos:
+                if ((aresta[0] == listaCaminho[0]) or (aresta[0] == listaCaminho[1])) and ((aresta[1] == listaCaminho[1]) or (aresta[1] == listaCaminho[0])):
+                    if aresta[2] > listaCaminho[2]:
+                        listaAuxCaminhos.remove(aresta)
+                        listaAuxCaminhos.append(listaCaminho)
+        else:
+            listaAuxCaminhos.append(listaCaminho)
+            verticeSet.add(listaCaminho[0])
+            verticeSet.add(listaCaminho[1])
+            verticeSetAux.add((listaCaminho[0], listaCaminho[1]))
+
+    if (pontoPartida not in verticeSet) or (pontoChegada not in verticeSet):
+        print("inf")
+    else:
+        grafo.buildGraph(listaAuxCaminhos, verticeSet)
+        grafo.dijkstra(pontoPartida, pontoChegada)
