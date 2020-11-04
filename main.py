@@ -51,19 +51,11 @@ class Graph:
         caminho.insert(0,inicial)
 
         if menorDistancia[final] != float("inf"):
-<<<<<<< HEAD
             return print("Chegou ao destino pela", antecessor[final][1], "com distância de", str(menorDistancia[final]), "metros")
 
 def lerArquivo():
     lista = []
     arq = open("base_de_dados_avalon.txt", "r")
-=======
-            return print("Chegou ao destino pela", antecessor[final][1], "com distância de:", str(menorDistancia[final]), "metros.")
-
-def lerArquivo():
-    lista = []
-    arq = open("base_de_dados.txt", "r")
->>>>>>> 3b094ab57f2bcf83c9f3716f0c3317ca81378ba4
     linhas = arq.readlines()
     arq.close()
     for linha in linhas:
